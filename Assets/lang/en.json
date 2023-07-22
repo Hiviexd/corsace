@@ -1,5 +1,6 @@
 {
     "flag": "https://osu.ppy.sh/images/flags/GB.png",
+    "loading": "LOADING...",
     "header": {
         "welcomeBack": "welcome back",
         "login": "login",
@@ -528,7 +529,13 @@
             "create": "CREATE TEAM"
         },
         "mappool": {
-            "title": "MAPPOOL"
+            "title": "MAPPOOL",
+            "unavailable": "Mappool not available yet",
+            
+        },
+        "teams": {
+            "teamsList": "TEAMS LIST",
+            "missingTeamsList": "COULD NOT GET TEAM LIST..."
         }
     },
     "main": {

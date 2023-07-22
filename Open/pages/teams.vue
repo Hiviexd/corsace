@@ -5,7 +5,7 @@
             class="teams_list__main_content"
         >
             <OpenTitle>
-                TEAMS LIST
+                {{ $t("open.teams.teamsList") }}
                 <template #buttons>
                     <SearchBar
                         placeholder="search for user/team..."
@@ -27,7 +27,7 @@
             class="teams_list__main_content"
         >
             <OpenTitle>
-                LOADING...
+                {{ $t("loading") }}
             </OpenTitle>
         </div>
         <div
@@ -35,7 +35,7 @@
             class="teams_list__main_content"
         >
             <OpenTitle>
-                COULD NOT GET TEAM LIST...
+                {{ $t("open.teams.missingTeamsList") }}
             </OpenTitle>
         </div>
     </div>
