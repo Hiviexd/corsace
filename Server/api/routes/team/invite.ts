@@ -30,6 +30,9 @@ inviteRouter.get("/user", isLoggedInDiscord, async (ctx) => {
 });
 
 inviteRouter.get("/:teamID", isLoggedInDiscord, validateTeam(false), async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     const team: Team = ctx.state.team;
 
     const invites = await getTeamInvites(team.ID, "teamID");

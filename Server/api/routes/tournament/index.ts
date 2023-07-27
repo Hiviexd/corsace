@@ -121,6 +121,9 @@ tournamentRouter.get("/open/:year", async (ctx) => {
 });
 
 tournamentRouter.get("/:tournamentID/teams", validateID, async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     // TODO: Use tournament ID and only bring registered teams
     // TODO: Effectively, we also removed isRegistered from the response
     const ID: number = ctx.state.ID;
@@ -173,6 +176,9 @@ tournamentRouter.get("/:tournamentID/teams", validateID, async (ctx) => {
 });
 
 tournamentRouter.get("/:tournamentID/qualifiers", validateID, async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     const ID: number = ctx.state.ID;
 
     const qualifiers = await Matchup
@@ -204,6 +210,9 @@ tournamentRouter.get("/:tournamentID/qualifiers", validateID, async (ctx) => {
 });
 
 tournamentRouter.get("/:tournamentID/qualifiers/scores", validateID, async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     const ID: number = ctx.state.ID;
 
     const tournament = await Tournament

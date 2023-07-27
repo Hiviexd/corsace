@@ -27,7 +27,7 @@ resultsRouter.get("/:year?", validatePhaseYear, isResults, async (ctx) => {
 });
 
 resultsRouter.get("/:year/search", validatePhaseYear, isResults, async (ctx) => {
-    if (await ctx.cashed() && ctx.state.mca.currentPhase() === "results")
+    if (ctx.state.mca.currentPhase() === "results" && await ctx.cashed())
         return;
 
     const categoryIDString = parseQueryParam(ctx.query.category);

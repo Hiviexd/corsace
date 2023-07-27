@@ -29,6 +29,9 @@ function requiredNumberFields<T extends Record<string, any>> (obj: Partial<T>, f
 const qualifierRouter = new Router();
 
 qualifierRouter.get("/:qualifierID", async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     const qualifierID = parseInt(ctx.params.qualifierID);
     if (isNaN(qualifierID)) {
         ctx.body = {

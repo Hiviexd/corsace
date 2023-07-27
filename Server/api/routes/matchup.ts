@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import { Matchup } from "../../../Models/tournaments/matchup";
 import { TournamentRoleType } from "../../../Models/tournaments/tournamentRole";
 import { isLoggedInDiscord } from "../../middleware";
-import { validateTournament, hasRoles, validateStageOrRound } from "../../middleware/tournament";
+import { validateTournament, hasTournamentRoles, validateStageOrRound } from "../../middleware/tournament";
 import { parseDateOrTimestamp } from "../../utils/dateParse";
 
 const matchupRouter = new Router();
@@ -43,7 +43,7 @@ const validatePOSTMatchups = (matchups: any[]): string | true => {
     return true;
 };
 
-matchupRouter.post("/create", validateTournament, validateStageOrRound, isLoggedInDiscord, hasRoles([TournamentRoleType.Organizer]), async (ctx) => {
+matchupRouter.post("/create", validateTournament, validateStageOrRound, isLoggedInDiscord, hasTournamentRoles([TournamentRoleType.Organizer]), async (ctx) => {
     const matchups = ctx.request.body?.matchups;
     if (!matchups) {
         ctx.body = {

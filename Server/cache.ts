@@ -12,6 +12,27 @@ export function deleteMCACache (data: { year: number }) {
     ]);
 }
 
+export function deleteTeamCache (data: { ID: number }) {
+    return deleteEndpoints([
+        "/api/team/" + data.ID,
+        "/api/team/all",
+    ]);
+}
+
+export function deleteTournamentCache (data: { ID: number }) {
+    return deleteEndpoints([
+        "/api/tournament/" + data.ID,
+        "/api/tournament/" + data.ID + "/qualifiers",
+        "/api/tournament/" + data.ID + "/qualifiers/scores",
+    ]);
+}
+
+export function deleteQualifierCache (data: { ID: number }) {
+    return deleteEndpoints([
+        "/api/qualifier/" + data.ID,
+    ]);
+}
+
 export function deleteEndpoints (endpoints: string[]) {
     const result: string[] = [];
     for (const endpoint of endpoints) {

@@ -84,7 +84,7 @@ export async function validateStageOrRound (ctx: ParameterizedContext, next: Nex
     await next();
 }
 
-export function hasRoles (roles: TournamentRoleType[]) {
+export function hasTournamentRoles (roles: TournamentRoleType[]) {
     return async (ctx: ParameterizedContext, next: Next): Promise<void> => {
         const member = await getMember(ctx.state.user.discord.userID);
         if (!member) {

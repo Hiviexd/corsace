@@ -48,6 +48,9 @@ teamRouter.get("/", isLoggedInDiscord, async (ctx) => {
 });
 
 teamRouter.get("/all", async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     const teamQ = Team
         .createQueryBuilder("team")
         .leftJoinAndSelect("team.manager", "manager")
@@ -67,6 +70,9 @@ teamRouter.get("/all", async (ctx) => {
 });
 
 teamRouter.get("/:teamID", async (ctx) => {
+    if (await ctx.cashed())
+        return;
+
     const team = await Team
         .createQueryBuilder("team")
         .leftJoinAndSelect("team.manager", "manager")
