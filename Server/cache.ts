@@ -1,5 +1,7 @@
-import LRU from "lru-cache";
+import { LRUCache } from "lru-cache";
 
-const cache = new LRU();
+const cache = new LRUCache<string, any>({
+    max: 100,
+});
 
 export { cache };

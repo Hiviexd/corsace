@@ -6,7 +6,7 @@ import { ModeDivision } from "../../../../Models/MCA_AYIM/modeDivision";
 import { CategoryType } from "../../../../Interfaces/category";
 import { Nomination } from "../../../../Models/MCA_AYIM/nomination";
 import { Vote } from "../../../../Models/MCA_AYIM/vote";
-import { cache } from "../../../../Server/cache";
+import { deleteMCACache } from "../../../functions/cache/deleteEndpoints";
 
 const adminYearsRouter = new Router;
 const categoryGenerator = new CategoryGenerator;
@@ -56,9 +56,12 @@ adminYearsRouter.post("/", validate, async (ctx) => {
         ]);
     }
 
-    cache.del("/api/mcaInfo/front?year=" + data.year);
-    cache.del("/api/mca?year=" + data.year);
-    cache.del("/api/staff");
+    const failedClears = deleteMCACache(mca);
+    if (failedClears.length > 0)
+        return ctx.body = { 
+            message: "Success! attached is the new MCA. Failed to clear cache for the following endpoints: " + failedClears.join(", "),
+            mca,
+        };
 
     ctx.body = { 
         message: "Success! attached is the new MCA.", 
@@ -73,12 +76,15 @@ adminYearsRouter.put("/:year", validate, async (ctx) => {
     let mca = await MCA.findOneOrFail(data.year);    
     mca = await MCA.fillAndSave(data, mca);
 
-    cache.del("/api/mcaInfo/front?year=" + data.year);
-    cache.del("/api/mca?year=" + data.year);
-    cache.del("/api/staff");
+    const failedClears = deleteMCACache(mca);
+    if (failedClears.length > 0)
+        return ctx.body = {
+            message: "Success! attached is the updated MCA. Failed to clear cache for the following endpoints: " + failedClears.join(", "),
+            mca,
+        };
 
     ctx.body = { 
-        message: "updated",
+        message: "Success! attached is the updated MCA.",
         mca,
     };
 });
@@ -132,6 +138,13 @@ adminYearsRouter.delete("/:year/delete", async (ctx) => {
         }
 
         const mcares = await mca.remove();
+
+        const failedClears = deleteMCACache(mca);
+        if (failedClears.length > 0)
+            return ctx.body = {
+                message: "Success! attached is the delete result. Failed to clear cache for the following endpoints: " + failedClears.join(", "),
+                mcares,
+            };
         
         ctx.body = { message: "Success! attached is the delete result.", mcares };
     } catch (e) {
