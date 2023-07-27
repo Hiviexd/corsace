@@ -1,9 +1,8 @@
 import Router from "@koa/router";
-import koaBasicAuth from "koa-basic-auth";
 import { ParameterizedContext, Next } from "koa";
 import { cron } from "../../../cron";
 import { CronJobType } from "../../../../Interfaces/cron";
-import { config } from "node-config-ts";
+import { isInterOp } from "../../../middleware";
 
 async function validateData (ctx: ParameterizedContext, next: Next) {
     const body = ctx.request.body;
@@ -45,10 +44,7 @@ async function validateData (ctx: ParameterizedContext, next: Next) {
 
 const cronRouter = new Router();
 
-cronRouter.use(koaBasicAuth({
-    name: config.interOpAuth.username,
-    pass: config.interOpAuth.password,
-}));
+cronRouter.use(isInterOp);
 
 cronRouter.get("/", async (ctx) => {
     ctx.body = cron.listJobs();

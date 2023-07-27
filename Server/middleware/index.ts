@@ -1,6 +1,7 @@
 import { config } from "node-config-ts";
 import { getMember } from "../discord";
 import { ParameterizedContext, Next } from "koa";
+import koaBasicAuth from "koa-basic-auth";
 
 interface discordRoleInfo {
     section: string;
@@ -106,4 +107,9 @@ function hasRoles (roles: discordRoleInfo[]) {
 const isHeadStaff = hasRole("corsace", "headStaff");
 const isCorsace = hasRole("corsace", "corsace");
 
-export { isLoggedIn, isLoggedInDiscord, isStaff, isHeadStaff, isCorsace, hasRole, hasRoles };
+const isInterOp = koaBasicAuth({
+    name: config.interOpAuth.username,
+    pass: config.interOpAuth.password,
+});
+
+export { isLoggedIn, isLoggedInDiscord, isStaff, isHeadStaff, isCorsace, hasRole, hasRoles, isInterOp };

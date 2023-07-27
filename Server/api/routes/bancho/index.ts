@@ -1,11 +1,11 @@
 import Router from "@koa/router";
-import koaBasicAuth from "koa-basic-auth";
 import runMatchup from "../../../../BanchoBot/functions/tournaments/matchup/runMatchup";
 import { ParameterizedContext, Next } from "koa";
 import { config } from "node-config-ts";
 import { Matchup, preInviteTime } from "../../../../Models/tournaments/matchup";
 import { TextChannel } from "discord.js";
 import { discordClient } from "../../../discord";
+import { isInterOp } from "../../../middleware";
 import state from "../../../../BanchoBot/state";
 
 async function validateData (ctx: ParameterizedContext, next: Next) {
@@ -37,10 +37,7 @@ async function validateData (ctx: ParameterizedContext, next: Next) {
 
 const banchoRouter = new Router();
 
-banchoRouter.use(koaBasicAuth({
-    name: config.interOpAuth.username,
-    pass: config.interOpAuth.password,
-}));
+banchoRouter.use(isInterOp);
 
 banchoRouter.post("/runMatchups", validateData, async (ctx) => {
     ctx.body = {
