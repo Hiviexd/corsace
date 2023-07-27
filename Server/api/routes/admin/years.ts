@@ -6,7 +6,7 @@ import { ModeDivision } from "../../../../Models/MCA_AYIM/modeDivision";
 import { CategoryType } from "../../../../Interfaces/category";
 import { Nomination } from "../../../../Models/MCA_AYIM/nomination";
 import { Vote } from "../../../../Models/MCA_AYIM/vote";
-import { deleteMCACache } from "../../../functions/cache/deleteEndpoints";
+import { deleteMCACache } from "../../../cache";
 
 const adminYearsRouter = new Router;
 const categoryGenerator = new CategoryGenerator;

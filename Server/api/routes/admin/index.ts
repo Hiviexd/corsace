@@ -8,7 +8,7 @@ adminRouter.use(isLoggedInDiscord);
 adminRouter.use(isCorsace);
 
 adminRouter.get("/reset", async (ctx) => {
-    cache.reset();
+    cache.clear();
     ctx.body = {
         success: "Success",
     };
